@@ -8,8 +8,9 @@ except ImportError as e:
     os.system("sudo pip3 install numpy")
     import numpy as np
 
-def ridge(x,y):
-    alpha=0.2; #设置超参数alpha
+def ridge(data):
+    x,y=read_data('C:\\Users\\Lenovo\\hello-world-y1zqianbb\\linear-regression-y1zqianbb\\data\\exp02\\')
+    alpha=0.2 #设置超参数alpha
     xTx=np.dot(x.T,x)
     rxTx=xTx+np.eye(x.shape[1])*alpha
     weight=np.dot(np.linalg.inv(rxTx),np.dot(x.T,y))
@@ -17,18 +18,8 @@ def ridge(x,y):
     
 
 
-def lasso(X, y):
-    """
-    Lasso回归，使用坐标下降法（coordinate descent）
-    args:
-        X - 训练数据集
-        y - 目标标签值
-        lambdas - 惩罚项系数
-        max_iter - 最大迭代次数
-        tol - 变化量容忍值
-    return:
-        w - 权重系数
-    """
+def lasso(data):
+    X,y=read_data('C:\\Users\\Lenovo\\hello-world-y1zqianbb\\linear-regression-y1zqianbb\\data\\exp02\\')
     lambdas=0.1
     max_iter=1000
     tol=1e-4
@@ -50,13 +41,6 @@ def lasso(X, y):
     return w
 
 def down(X, y, w, index, lambdas=0.1):
-    """
-    cost(w) = (x1 * w1 + x2 * w2 + ... - y)^2 + ... + λ(|w1| + |w2| + ...)
-    假设 w1 是变量，这时其他的值均为常数，带入上式后，其代价函数是关于 w1 的一元二次函数，可以写成下式：
-    cost(w1) = (a * w1 + b)^2 + ... + λ|w1| + c (a,b,c,λ 均为常数)
-    => 展开后
-    cost(w1) = aa * w1^2 + 2ab * w1 + λ|w1| + c (aa,ab,c,λ 均为常数)
-    """
     # 展开后的二次项的系数之和
     aa = 0
     # 展开后的一次项的系数之和
@@ -74,17 +58,6 @@ def down(X, y, w, index, lambdas=0.1):
     return det(aa, ab, lambdas)
 
 def det(aa, ab, lambdas=0.1):
-    """
-    通过代价函数的导数求 w，当 w = 0 时，不可导
-    det(w) = 2aa * w + 2ab + λ = 0 (w > 0)
-    => w = - (2 * ab + λ) / (2 * aa)
-
-    det(w) = 2aa * w + 2ab - λ = 0 (w < 0)
-    => w = - (2 * ab - λ) / (2 * aa)
-
-    det(w) = NaN (w = 0)
-    => w = 0
-    """
     w = - (2 * ab + lambdas) / (2 * aa)
     if w < 0:
         w = - (2 * ab - lambdas) / (2 * aa)
