@@ -98,7 +98,7 @@ def read_data(path='./data/exp02/'):
     return x, y
 import numpy as np
 
-x,y=read_data('C:\\Users\\Lenovo\\hello-world-y1zqianbb\\linear-regression-y1zqianbb\\data\\exp02\\')
-print(ridge(x,y))
-print("//////////////////////")
-print(lasso(x,y))
+# x,y=read_data('C:\\Users\\Lenovo\\hello-world-y1zqianbb\\linear-regression-y1zqianbb\\data\\exp02\\')
+# print(ridge(x,y))
+# print("//////////////////////")
+# print(lasso(x,y))
