@@ -10,7 +10,7 @@ except ImportError as e:
 
 def ridge(data):
     x,y=read_data()
-    alpha=0.15 #设置超参数alpha
+    alpha=0.25 #设置超参数alpha
     xTx=np.dot(x.T,x)
     rxTx=xTx+np.eye(x.shape[1])*alpha
     weight=np.dot(np.linalg.inv(rxTx),np.dot(x.T,y))
@@ -20,7 +20,7 @@ def ridge(data):
 
 def lasso(data):
     X,y=read_data()
-    lambdas=0.15
+    lambdas=0.05
     max_iter=1000
     tol=1e-4
     w = np.zeros(X.shape[1])
@@ -35,7 +35,7 @@ def lasso(data):
             break
     return data @ w
 
-def down(X, y, w, index, lambdas=0.1):
+def down(X, y, w, index, lambdas=0.05):
     aa = 0
     ab = 0
     for i in range(X.shape[0]):
@@ -45,7 +45,7 @@ def down(X, y, w, index, lambdas=0.1):
         ab = ab + a * b
     return det(aa, ab, lambdas)
 
-def det(aa, ab, lambdas=0.1):
+def det(aa, ab, lambdas=0.05):
     w = - (2 * ab + lambdas) / (2 * aa)
     if w < 0:
         w = - (2 * ab - lambdas) / (2 * aa)
