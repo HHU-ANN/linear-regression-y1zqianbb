@@ -10,7 +10,7 @@ except ImportError as e:
 
 def ridge(data):
     x,y=read_data()
-    alpha=0.25 #设置超参数alpha
+    alpha=0.2 #设置超参数alpha
     xTx=np.dot(x.T,x)
     rxTx=xTx+np.eye(x.shape[1])*alpha
     weight=np.dot(np.linalg.inv(rxTx),np.dot(x.T,y))
@@ -20,14 +20,17 @@ def ridge(data):
 
 def lasso(data):
     X,y=read_data()
-    lambdas=0.05
+    lambdas=0.1
     max_iter=1000
     tol=1e-4
     w = np.zeros(X.shape[1])
     for it in range(max_iter):
         done = True
+        # 遍历所有自变量
         for i in range(0, len(w)):
+            # 记录上一轮系数
             weight = w[i]
+            # 求出当前条件下的最佳系数
             w[i] = down(X, y, w, i, lambdas)
             if (np.abs(weight - w[i]) > tol):
                 done = False
@@ -35,7 +38,7 @@ def lasso(data):
             break
     return data @ w
 
-def down(X, y, w, index, lambdas=0.05):
+def down(X, y, w, index, lambdas=0.1):
     aa = 0
     ab = 0
     for i in range(X.shape[0]):
@@ -45,7 +48,7 @@ def down(X, y, w, index, lambdas=0.05):
         ab = ab + a * b
     return det(aa, ab, lambdas)
 
-def det(aa, ab, lambdas=0.05):
+def det(aa, ab, lambdas=0.1):
     w = - (2 * ab + lambdas) / (2 * aa)
     if w < 0:
         w = - (2 * ab - lambdas) / (2 * aa)
