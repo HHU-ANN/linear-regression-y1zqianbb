@@ -9,7 +9,7 @@ except ImportError as e:
     import numpy as np
 
 def ridge(data):
-    x,y=read_data('C:\\Users\\Lenovo\\hello-world-y1zqianbb\\linear-regression-y1zqianbb\\data\\exp02\\')
+    x,y=read_data()
     alpha=0.2 #设置超参数alpha
     xTx=np.dot(x.T,x)
     rxTx=xTx+np.eye(x.shape[1])*alpha
@@ -19,7 +19,7 @@ def ridge(data):
 
 
 def lasso(data):
-    X,y=read_data('C:\\Users\\Lenovo\\hello-world-y1zqianbb\\linear-regression-y1zqianbb\\data\\exp02\\')
+    X,y=read_data()
     lambdas=0.1
     max_iter=1000
     tol=1e-4
@@ -69,3 +69,4 @@ def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
     y = np.load(path + 'y_train.npy')
     return x, y
+
